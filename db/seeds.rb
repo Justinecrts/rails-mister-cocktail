@@ -11,17 +11,28 @@ require 'open-uri'
 require 'rest-client'
 require 'nokogiri'
 
+Ingredient.destroy_all
+
 response = RestClient.get "http://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"
 repos = JSON.parse(response)
 repos["drinks"].each do |element|
   Ingredient.create(name: element["strIngredient1"])
 end
+puts "Finish Scrapping For ingredient"
 
-#commencer une boucle ici
-html_file = open("http://www.epicurious.com/tools/searchresults?search=cocktail") #ajouter dans l'url index
-html_doc = Nokogiri::HTML(html_file)
+Cocktail.destroy_all
 
-html_doc.search('.recipeLnk').each do |element|
-  Cocktail.create(name: element.text)
+page = 1
+while page < 5
+  html_file = open("http://www.epicurious.com/tools/searchresults?search=cocktail&pageNumber=#{page}")
+  html_doc = Nokogiri::HTML(html_file)
+  cocktails = html_doc.search('.sr_rows')
+  cocktails.each do |cocktail|
+    name = cocktail.search('.recipeLnk').text
+    image_url = cocktail.search('.sr_recipe_image').attribute('src').value
+    Cocktail.create!(name: name, image_url: image_url)
+    puts "#{name} created"
+  end
+page += 1
 end
-#incrémenter index interpolé
+

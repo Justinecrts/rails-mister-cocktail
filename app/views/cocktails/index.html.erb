@@ -1,25 +1,22 @@
 <h1>Les Cocktails</h1>
 <%= link_to "Ajouter un cocktail", new_cocktail_path %>
 <br><br>
-<% @cocktails.each do |cocktail| %>
-  <div class="container">
-    <div class="row">
+<div class="container">
+  <div class="row">
+    <% @cocktails.each do |cocktail| %>
       <div class="col-xs-12 col-sm-4">
-        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('../../assets/images/cocktail.jpg');">
-          <div class="card-category"></div>
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%=cocktail.image_url%>');">
           <div class="card-description">
             <h2><%= cocktail.name %> </h2>
-            <p>Cool cocktail</p>
           </div>
-          <img class="card-user avatar" src="user.jpg">
-          <a class="card-link" href="#" ></a>
+          <%= link_to "Allez voir", cocktail_path(cocktail), class: "card-link" %>
         </div>
+        <br>
       </div>
-    </div>
+    <% end %>
   </div>
-  <%= link_to "Allez voir", cocktail_path(cocktail) %>
-  <%= link_to "Delete this cocktail", cocktail_path(cocktail), method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %>
+</div>
+
 
 
 
