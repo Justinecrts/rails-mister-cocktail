@@ -22,6 +22,6 @@ html_file = open("http://www.epicurious.com/tools/searchresults?search=cocktail"
 html_doc = Nokogiri::HTML(html_file)
 
 html_doc.search('.recipeLnk').each do |element|
-  Cocktail.create(name: element.text
+  Cocktail.create(name: element.text)
 end
 #incrémenter index interpolé
