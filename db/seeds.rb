@@ -9,9 +9,19 @@
 require 'json'
 require 'open-uri'
 require 'rest-client'
+require 'nokogiri'
 
 response = RestClient.get "http://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"
 repos = JSON.parse(response)
 repos["drinks"].each do |element|
   Ingredient.create(name: element["strIngredient1"])
 end
+
+#commencer une boucle ici
+html_file = open("http://www.epicurious.com/tools/searchresults?search=cocktail") #ajouter dans l'url index
+html_doc = Nokogiri::HTML(html_file)
+
+html_doc.search('.recipeLnk').each do |element|
+  Cocktail.create(name: element.text
+end
+#incrémenter index interpolé
