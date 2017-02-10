@@ -8,6 +8,10 @@ end
 
 gem 'figaro'
 
+gem 'cloudinary', '1.1.0'
+
+gem 'carrierwave'
+
 gem 'rest-client'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

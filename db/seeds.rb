@@ -18,7 +18,6 @@ repos = JSON.parse(response)
 repos["drinks"].each do |element|
   Ingredient.create(name: element["strIngredient1"])
 end
-puts "Finish Scrapping For ingredient"
 
 Cocktail.destroy_all
 
@@ -30,8 +29,7 @@ while page < 5
   cocktails.each do |cocktail|
     name = cocktail.search('.recipeLnk').text
     image_url = cocktail.search('.sr_recipe_image').attribute('src').value
-    Cocktail.create!(name: name, image_url: image_url)
-    puts "#{name} created"
+    Cocktail.create!(name: name, photo: image_url)
   end
 page += 1
 end
